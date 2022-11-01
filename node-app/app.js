@@ -15,7 +15,7 @@ let data = [
     {
         id:'IT101',
         login:'Dwayne101',
-        name:'Dwayne Johnson',
+        name:'Mark Walberg',
         salary:11000,
         createdDate:new Date().toLocaleDateString(),
         updatedDate:new Date().toLocaleDateString()
