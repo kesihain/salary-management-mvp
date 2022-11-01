@@ -60,7 +60,7 @@ export const HomePage = () => {
             return;
         }
         uploadEmployees(file).then(result=>{
-            
+            closeUploadDialog();
         })
     }
 
