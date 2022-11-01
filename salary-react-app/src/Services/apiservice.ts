@@ -1,6 +1,6 @@
 import axios from 'axios'
-import {toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { toastService } from '../Utils/utils';
 const API_ROOT = 'http://localhost:3001'
 
 export const getEmployees = async ()=>{
@@ -15,21 +15,31 @@ export const getEmployees = async ()=>{
         validateResponse(result)
         return result.data.data
     } catch (error) {
+        toastService(error.status)
+        console.log(error)
         throw(error)
     }
 }
 
 const validateResponse = (result)=>{
     if(![201,200,204].includes(result.data.code)){
-        toast(`Unexpected Response or Request, Check request and try again later`, {
-            position: "top-right",
-            autoClose: 300,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            });
+        toastService('Unexpected Response or Request, Check request and try again later')
         throw('Unexpected Response or Request, Check request and try again later')
     }
+}
+
+export const uploadEmployees= async (file:File)=>{
+    let formData = new FormData()
+    formData.append('file',file)
+    axios.post(`${API_ROOT}/employees/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }).then(result=>{
+        console.log(formData.get('file'))
+        validateResponse(result)
+        toastService('successfully uploaded employees')
+      }).catch(error=>{
+        console.log(formData)
+      })
 }

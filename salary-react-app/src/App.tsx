@@ -1,11 +1,10 @@
 import React from 'react';
 import './App.css';
-import { AppBar, Box,  Container, Fab, IconButton, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box,  Container, IconButton, Toolbar, Typography } from '@mui/material';
 import Menu from '@mui/icons-material/Menu';
 import { ToastContainer } from 'react-toastify';
-import { EmployeeListing } from './Components/EmployeeListing';
-import AddIcon from '@mui/icons-material/Add';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { HomePage } from './Components/Home';
 
 function App() {
 
@@ -30,16 +29,11 @@ function App() {
       </AppBar>
       <ToastContainer></ToastContainer>
       <Container >
+            <br></br>
         <BrowserRouter>
           <Switch>
             <Route exact path='/' component={() =>
-              <>
-                <br></br>
-                <EmployeeListing></EmployeeListing>
-                <Fab sx={fabStyle} color="primary" aria-label="add">
-                  <AddIcon onClick={()=>window.location.assign("/add")} fontSize='large'></AddIcon>
-                </Fab>
-              </>
+              <HomePage></HomePage>
             } />
             <Route path='/add' component={() =><></>}/>
           </Switch>
@@ -49,14 +43,5 @@ function App() {
   );
 }
 
-const fabStyle = {
-  margin: 0,
-  top: 'auto',
-  right: 20,
-  bottom: 20,
-  left: 'auto',
-  position: 'fixed',
-
-};
 
 export default App;
