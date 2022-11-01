@@ -3,6 +3,9 @@ const cors = require('cors')
 const config = require('./config.js')
 var app = express();
 const port = config.APP_PORT
+
+const multer  = require('multer')
+
 let data = [
     {
         id:'IT100',
@@ -14,7 +17,7 @@ let data = [
     },
     {
         id:'IT101',
-        login:'Dwayne101',
+        login:'Mark101',
         name:'Mark Walberg',
         salary:11000,
         createdDate:new Date().toLocaleDateString(),
@@ -34,13 +37,13 @@ app.get("/employees",cors(),(req,res)=>{
     res.json({data:data,code:200,status:'HR200'})
 })
 
-app.post('/employees/upload',cors(),(req,res)=>{
-    const input = req.query
-
+app.post('/employees/upload',multer().any(),cors(),(req,res)=>{
+    console.log(req.files)
     res.json({status:'HR200',code:201})
 })
 
 app.put('/employees/:id',cors(),(req,res)=>{
+    const input = req.query
     res.json({status:'HR200',code:204})
 })
 
