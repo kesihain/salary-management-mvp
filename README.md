@@ -5,6 +5,8 @@
 1. Open terminal, 
     ```
     cd node-app 
+
+    npm install # only for first time setup
     
     #if pm2 is installed
     pm2 start app.js
