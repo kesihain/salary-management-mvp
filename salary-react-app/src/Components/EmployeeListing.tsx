@@ -50,7 +50,7 @@ const EmployeeItem = ({ setDeleteDialog, item, setEmployee }) => {
     }
     console.log(item)
     return (
-        <Grid container sx={{ backgroundColor: '#BCBCBC', margin: '5px', borderRadius: '10px' }} spacing={1}>
+        <Grid container sx={{ backgroundColor: '#BCBCBC', marginTop:'8px', borderRadius: '10px' }} spacing={1}>
             <Grid item xs={2}>
                 <TextBlock text={item.id}></TextBlock>
             </Grid>
