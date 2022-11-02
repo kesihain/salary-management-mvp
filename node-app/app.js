@@ -1,6 +1,7 @@
 var express = require("express");
 const cors = require('cors')
 const config = require('./config.js')
+const bodyParser = require('body-parser')
 var app = express();
 const port = config.APP_PORT
 
@@ -11,6 +12,8 @@ app.use(cors({
     credentials: true,            //access-control-allow-credentials:true
     optionSuccessStatus: 200
 }))
+
+app.use(bodyParser.json())
 
 let data = [
     {
@@ -43,9 +46,20 @@ app.get("/employees", cors(), (req, res) => {
     res.json({ data: data, code: 200, status: 'HR200' })
 })
 
-app.put('/employees/:id', cors({ credentials: true }), (req, res) => {
+app.put('/employees/:id', cors(), (req, res) => {
     const input = req.query
     console.log(req.query)
+    console.log(req.body)
+    data = data.map(item => {
+        if(item.id != req.params.id)
+            return item
+        return {
+            id: req.params.id,
+            login: req.body.login,
+            name: req.body.name,
+            salary: req.body.salary,
+        }
+    })
     res.json({ status: 'HR200', code: 204 })
 })
 
