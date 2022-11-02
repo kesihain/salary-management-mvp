@@ -61,7 +61,7 @@ export const DeleteEmployeeDialog = ({ deleteDialog, setDeleteDialog, employee }
                     Close
                 </Button>
                 <Button onClick={handleDeleteEmployee} autoFocus>
-                    Submit
+                    Comfirm
                 </Button>
             </DialogActions>
         </Dialog>

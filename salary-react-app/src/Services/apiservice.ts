@@ -1,5 +1,6 @@
 import axios from 'axios'
 import 'react-toastify/dist/ReactToastify.css';
+import { Employee } from '../Utils/ObjectType';
 import { toastService } from '../Utils/utils';
 const API_ROOT = 'http://localhost:3001'
 
@@ -51,6 +52,30 @@ export const deleteEmployee = async (id) => {
             {
                 method: "DELETE",
                 url: `${API_ROOT}/employees/${id}`,
+            }
+        )
+        validateResponse(result)
+        return result.data.data
+    } catch (error) {
+        toastService(error.status)
+        console.log(error)
+        throw (error)
+    }
+}
+
+
+export const updateEmployee = async (employee: Employee) => {
+    try {
+
+        let result = await axios(
+            {
+                method: "PUT",
+                url: `${API_ROOT}/employees/${employee.id}`,
+                data: {
+                    name: employee.name,
+                    login: employee.login,
+                    salary: employee.salary
+                }
             }
         )
         validateResponse(result)

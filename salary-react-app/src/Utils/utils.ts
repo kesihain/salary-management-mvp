@@ -10,5 +10,6 @@ export const toastService=(text)=>{
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
+        toastId: 1
         });
 }

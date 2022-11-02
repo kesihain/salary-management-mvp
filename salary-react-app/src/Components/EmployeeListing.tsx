@@ -7,11 +7,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { getEmployees } from '../Services/apiservice';
 import { DeleteEmployeeDialog } from './DeleteEmployeeDialog';
 import { TextBlock } from './TextBlock'
+import { UpdateEmployeeDialog } from './UpdateEmployeeDialog';
+import  {Employee} from '../Utils/ObjectType' 
 export const EmployeeListing = () => {
 
-    const [employeeData, setEmployeeData] = useState([]);
+    const [employeeData, setEmployeeData] = useState<Array<Employee>>([]);
     const [deleteDialog, setDeleteDialog] = useState(false);
-    const [employee, setEmployee] = useState({
+    const [updateDialog, setUpdateDialog] = useState(false);
+    const [employee, setEmployee] = useState<Employee>({
         id: '',
         login: '',
         name: '',
@@ -21,10 +24,9 @@ export const EmployeeListing = () => {
 
     useEffect(() => {
         getEmployees().then(result => {
-            console.log(result)
             setEmployeeData(result)
         });
-    }, [deleteDialog])
+    }, [deleteDialog,updateDialog])
 
     return (
 
@@ -33,22 +35,27 @@ export const EmployeeListing = () => {
                 Employees
             </Typography>
             <br></br>
+            <UpdateEmployeeDialog updateDialog={updateDialog} setUpdateDialog={setUpdateDialog} employee={employee} setEmployee={setEmployee}></UpdateEmployeeDialog>
             <DeleteEmployeeDialog deleteDialog={deleteDialog} setDeleteDialog={setDeleteDialog} employee={employee}></DeleteEmployeeDialog>
             <ListHeader></ListHeader>
-            {employeeData.map(row => (
-                <EmployeeItem setDeleteDialog={setDeleteDialog} item={row} setEmployee={setEmployee}></EmployeeItem>
+            {employeeData.map((row,index) => (
+                <EmployeeItem key={index} setDeleteDialog={setDeleteDialog} item={row} setEmployee={setEmployee} setUpdateDialog={setUpdateDialog}></EmployeeItem>
             ))}
         </Grid>
     )
 }
 
-const EmployeeItem = ({ setDeleteDialog, item, setEmployee }) => {
+const EmployeeItem = ({ setDeleteDialog, item, setEmployee, setUpdateDialog }) => {
 
     const handleDeleteDialog = (item) => {
         setEmployee(item)
         setDeleteDialog(true)
     }
-    console.log(item)
+
+    const handleUpdateDialog = (item=>{
+        setEmployee(item)
+        setUpdateDialog(true)
+    })
     return (
         <Grid container sx={{ backgroundColor: '#BCBCBC', marginTop:'8px', borderRadius: '10px' }} spacing={1}>
             <Grid item xs={2}>
@@ -64,7 +71,7 @@ const EmployeeItem = ({ setDeleteDialog, item, setEmployee }) => {
                 <TextBlock text={item.salary}></TextBlock>
             </Grid>
             <Grid item xs={2}>
-                <IconButton size='small' sx={{ padding: 0 }}>
+                <IconButton onClick={()=>handleUpdateDialog(item)} size='small' sx={{ padding: 0 }}>
                     <EditIcon fontSize='small' />
                 </IconButton>
                 <IconButton onClick={() => handleDeleteDialog(item)} size='small' sx={{ padding: 0 }}>
